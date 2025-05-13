@@ -75,3 +75,80 @@ select * from emp
 --select ename from emp 
 --where mgr=7788
 --group by mgr
+
+--Write a stored procedure that takes a department number and returns the count of employees for each job in that department.
+
+--create proc Count_of_Emp_EachDept
+--(
+--@deptno int
+--)
+--as 
+--begin
+--(
+--select count(*), deptno from emp 
+--where deptno=@deptno
+--group by deptno
+--)
+--end
+
+--exec Count_of_Emp_EachDept 30
+
+--Create a stored procedure that accepts a salary threshold and returns departments where the average salary is greater than that threshold.
+
+
+--create proc AVg_sal_Dept_greater_threshold
+--(
+--@sal int
+--)
+--as
+--begin
+--(
+
+--select deptno, Avg(sal), 
+--case 
+--	when Avg(Sal)>@sal then 'Above threshold'
+--	else 'below or equal to Threshold'
+--End status
+--from emp
+--group by deptno
+--)
+--end;
+
+--exec AVg_sal_Dept_greater_threshold 1500
+
+--Write a stored procedure that takes a department location as a parameter and lists all employees working in that location
+
+
+
+--alter proc display_Emp_using_LOC
+--(
+--@loc varchar(100)
+--)
+--as
+--begin
+--(
+--select ename from emp e  inner join dept d
+--on e.deptno=d.deptno
+--where d.loc= @loc
+--)
+--end
+
+--select * from dept
+--exec display_Emp_using_LOC 'CHICAGO'
+
+--Create a stored procedure that accepts a department name and returns all employees in that department.
+
+--create proc display_Emp_using_DepName
+--(
+--@dname varchar(100)
+--)
+--as
+--begin
+--(
+--select ename from emp e  inner join dept d
+--on e.deptno=d.deptno
+--where d.dname= @dname
+--)
+--end
+
+--exec display_Emp_using_DepName 'ACCOUNTING'
