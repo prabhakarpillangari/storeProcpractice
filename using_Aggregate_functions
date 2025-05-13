@@ -152,3 +152,41 @@ select * from emp
 --end
 
 --exec display_Emp_using_DepName 'ACCOUNTING'
+
+--Write a stored procedure that takes a department number and shows the department name along with the names of employees in that department.
+
+
+
+--create proc display_DeptName_EmpName_using_DeptNO
+--(
+--@deptno int
+--)
+--as
+--begin
+--(
+--select d.dname,e.ename from emp e
+--inner join  dept d on d.deptno=e.deptno
+--where d.deptno = @deptno
+--)
+--end
+
+--exec display_DeptName_EmpName_using_DeptNO 10
+
+--Create a stored procedure that takes a job title and returns the employee name, department name, and location
+
+
+--create proc Display_EmpDetails_using_job
+--(
+--@job varchar(100)
+--)
+--as
+--begin
+--(
+--select e.ename,d.dname,d.loc from emp e 
+--inner join dept d on d.deptno=e.deptno
+--where e.job=@job
+--)
+--end;
+
+--exec Display_EmpDetails_using_job 'SALESMAN'
+--select * from emp
