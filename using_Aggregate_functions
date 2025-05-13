@@ -1,0 +1,77 @@
+--Create a stored procedure that takes a department number as a parameter and returns the total salary for that department
+
+
+
+--alter proc display_dept_sal_sum
+--(
+--@deptno int
+--)
+--as 
+--begin
+--(
+--select sum(sal),deptno from emp 
+--where deptno= @deptno
+--group by deptno
+--)
+--end
+
+--exec [dbo].[display_dept_sal_sum] 30
+
+--Write a stored procedure that takes a job title as input and returns the average salary for that job.
+
+--create proc display_Job_Avg_Sal(
+--@job varchar(100)
+--)
+--as 
+--begin
+--(
+--select avg(Sal),job from emp
+--where job=@job
+--group by job
+--)
+--end
+
+--exec display_Job_Avg_Sal 'manager'
+
+select * from emp
+
+--Create a stored procedure that takes a department number as input and returns the maximum and minimum salary in that department.
+--create proc display_dept_max_min_sal
+--(
+--@deptno int
+--)
+--as 
+--begin
+--(
+--select max(sal), min(sal) from emp 
+--where deptno=@deptno
+--group by deptno
+--)
+--end
+
+--exec display_dept_max_min_sal 30
+
+
+--Write a stored procedure that accepts a manager ID and returns the total number of employees reporting to that manager.
+
+
+--alter proc display_TotalEmp_By_managerID
+--(
+--@mgr int
+--)
+--as 
+--begin
+--(
+--select count(*) from emp 
+--where mgr=@mgr
+--group by mgr
+
+--)
+--end
+
+
+--exec display_TotalEmp_By_managerID 7566
+
+--select ename from emp 
+--where mgr=7788
+--group by mgr
