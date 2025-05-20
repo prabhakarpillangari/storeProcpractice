@@ -1,0 +1,54 @@
+use practice
+go
+
+--purpose: This script will create db and few table in it store info about
+
+create database school
+
+sp_helpdb school
+
+create table course_Master
+(
+cid int primary key,
+courseName varchar(40) not null,
+category char(1) null check (category ='B' or category='M' or category ='A'),
+Fee smallmoney not null check (Fee >0)
+)
+
+insert into course_Master values(1, 'java','B',4000),(2, 'python','M',5000),(3,'MSBI','B',6000),(4, 'PLSQL','A',3000),(5, 'Web','B',2000)
+
+select * from course_Master
+
+insert into course_Master values (6, 'dot net','A',6000)
+
+create table StudentMaster
+(
+sid tinyint primary key,
+name varchar(40) not null,
+origin char(1) not null check(origin ='L' or origin ='F'),
+type char(1) not null check(type ='U' or type ='G')
+)
+
+insert into StudentMaster values
+(1,'steve','F','G'),
+(2,'smith','F','U'),
+(3,'king','L','G'),
+(4,'raju','L','U')
+
+--Enrollment
+create table EnrollmentMaster
+(
+cid int not null foreign key references course_Master(cid),
+sid tinyint not null foreign key references StudentMaster(sid),
+doe  datetime not null,
+FWF bit not null,
+grade char(1) check(grade in( 'O','A','B' ,'C'))
+)
+
+insert into EnrollmentMaster values(30,3,getdate(),1,'A'),(20,2,getdate(),0,'B')
+update course_Master
+set cid=60
+where cid=6
+
+select * FROM EnrollmentMaster
+
