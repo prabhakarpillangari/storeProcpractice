@@ -1,0 +1,119 @@
+use indian_bank
+go
+
+--product_master
+create table ProductMaster
+(
+ Pid char(2) primary key,
+ ProductName varchar(25) not null
+)
+
+--read 
+select * from ProductMaster
+
+-- insert 
+insert into ProductMaster values('SB','saving bank'),
+('LA','Loan Account'),
+('FD','Fixed Deposit'),
+('RD','Recurring Deposits')
+
+--Region master
+--Ctrl+shift+u 
+--Ctrl+shift+l
+create table RegionMaster
+(
+Rid int primary key,
+RegionName char(6) not null
+)
+--insert
+insert into RegionMaster values(1,'south'),
+(2,'north'),
+(3,'East'),
+(4,'west')
+
+---branch master
+create table BranchMaster
+(
+Brid  char(3) primary key,
+BranchName varchar(30) not null,
+BranchAddress varchar(50) not null,
+Rid int not null foreign key references RegionMaster(Rid)
+)
+go
+
+--insert branchmaster
+insert into BranchMaster values('BR1','Goa','Opp: KLM Mall, Panji, Goa-677123',2),
+('BR2','Hyd','Hitech City, Hitex, Hyd-500012',1),
+('BR3','Bgl','Whitefield, kadugodi, Bgl-560076',4),
+('BR4','KL','Kochi, Errupalyam, KL-579896',3),
+('BR5','Ap','Tirupati, balaji colony, TPT-560076',2),
+('BR6','TN','chennai, beach road, TN-560076',3),
+('BR7','GT','Rajisthan, Gedhuvalla Vg, GT-560076',1),
+('BR8','JK','Srinagar, Ladakh , JK-560076',3),
+('BR9','UP','jhansi, Talpura, UP-560076',2)
+select * from BranchMaster
+
+--delete from BranchMaster
+--where Rid in(1,2)
+
+--user master
+
+create table UserMaster
+(
+UserId int primary key,
+UserName varchar(30) not null,
+Desgination char(1) not null check(Desgination in ('M','C','T','O'))--M-manger, o-office, c-clerk, T-teller,
+)
+--insert
+insert into UserMaster values(1, 'bhaskarJogi','M'),
+(2,'marphy','C'),
+(3,'lea','O'),
+(4,'Glass man','T')
+
+create table AccountMaster
+(
+Acid int primary key,
+Name varchar(40) not null,
+Address varchar(50) not null,
+Brid char(3) not null foreign key references BranchMaster(Brid),
+Pid char(2) not null foreign key references ProductMaster(Pid),
+DOO DateTime not null, --date of opening
+CBalance money null,--clear balance
+UBalance money null,--unclear balance
+Status Char(1) not null check (Status in ('O','I','C')) -- o-operative, i -inoperative,C-closed
+)
+go
+
+select * from AccountMaster
+select * from ProductMaster
+
+insert AccountMaster values
+(101,'Arjun','USA','BR1','SB','2018/12/13',1000,1000,'O'),
+(102,'Ahmed Patel','Mumbai','BR2','SB','2018/12/17',2000,2000,'O')
+
+select * from UserMaster
+--Transaction master
+create table TxnMaster
+(
+	TNO int primary key identity(1,1), --identity(seed,increment)
+	DOT datetime not null,--date of transacion
+	Acid int not null foreign key references AccountMaster(Acid),
+	Brid char(3) not null foreign key references BranchMaster(Brid),
+	Txn_Type char(3) not null check (Txn_Type in ('CW','CD','CQD','CQW')), --CW -cash withdrawal, CD-cash Deposit, CQD- Cash check Deposit, cash check Withdrawl
+	CHQ_NO int null, --check
+	CHQ_Date smalldatetime not null,
+	TXN_Amount money not null,
+	UserId int not null foreign key references UserMaster(UserId)
+
+)
+go
+
+select * from TxnMaster
+
+select * from UserMaster
+select * from AccountMaster
+select * from ProductMaster
+select * from BranchMaster
+select * from RegionMaster
+
+
