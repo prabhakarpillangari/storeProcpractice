@@ -101,11 +101,23 @@ create table TxnMaster
 	Brid char(3) not null foreign key references BranchMaster(Brid),
 	Txn_Type char(3) not null check (Txn_Type in ('CW','CD','CQD','CQW')), --CW -cash withdrawal, CD-cash Deposit, CQD- Cash check Deposit, cash check Withdrawl
 	CHQ_NO int null, --check
-	CHQ_Date smalldatetime not null,
+	CHQ_Date smalldatetime  null,
 	TXN_Amount money not null,
 	UserId int not null foreign key references UserMaster(UserId)
 
 )
+go
+
+---insert 
+use indian_bank
+go
+select * from TxnMaster
+insert into TxnMaster values 
+('2019/1/12',101,'BR1', 'CD',Null,Null, 4000,1),
+('2019/1/15',102,'BR2', 'CD',Null,Null, 2000,3),
+('2019/2/12',101,'BR1', 'CW',Null,Null, 1000,4),
+('2019/1/01',101,'BR3', 'CD',Null,Null, 5000,2),
+('2019/2/12',102,'BR1', 'CQD',12345,'2018/2/7', 2500,4)
 go
 
 select * from TxnMaster
