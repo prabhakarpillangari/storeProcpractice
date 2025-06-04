@@ -1,0 +1,104 @@
+use IBANK
+go
+select * from AMASTER
+
+--columns selected
+select acid, name, address,brid from AMASTER
+
+--few columns selected
+select * from AMASTER
+where brid='BR5'
+
+--sorting using order by
+select * from AMASTER
+order by brid desc
+
+select acid, name  from AMASTER
+where pid ='sb'
+order by name desc
+
+select *,* from AMASTER
+
+select acid,name,acid, name ,*
+from AMASTER
+
+select 5
+
+select 'java'
+
+select 2  from AMASTER
+
+select 5 as my lucky Num --Incorrect syntax near 'lucky'.
+select 5 as [my lucky Num] --5
+
+select acid,name, 'im working on SQL' from AMASTER
+
+select 'my account id is '+ convert(varchar,acid) as myacid, name  from AMASTER
+
+select 'account holder name is ' ,name from AMASTER --adding another column
+select 'account holder name is ' + name from AMASTER --concatination
+
+--cast (col as datatype)
+--convert (datatype,col,style)
+
+select acid, name ,cast(cbal as varchar)+' INR' as currency
+from AMASTER
+
+select acid, name, CONVERT(varchar,cbal)+' INR' from AMASTER
+
+select acid, name ,'USD $' + cast(cbal as varchar) as balance
+from AMASTER
+
+select acid,name ,'USD $'+ convert(varchar,cbal) as balance
+from AMASTER
+
+select acid, name ,doo
+from AMASTER
+
+select acid,name ,convert(varchar,doo) as Accopendate  --Jan  1 2011 12:00AM
+from AMASTER
+
+select acid, name, convert(varchar,doo,1) as Accopendate -- 01/01/11
+from AMASTER
+
+select acid, name, convert(varchar,doo,2) as AccoOpenDate -- 11.01.01
+from AMASTER
+
+select acid, name, convert(varchar,doo,3) as AccoOpenDate -- 01/01/11
+from AMASTER
+
+select acid, name, convert(varchar,doo,4) as AccoOpenDate -- 01.01.11
+from AMASTER
+
+select acid, name, convert(varchar,doo,5) as AccoOpenDate -- 01-01-11
+from AMASTER
+
+select acid, name, convert(varchar,doo,6) as AccoOpenDate -- 01 Jan 11
+from AMASTER
+
+select acid, name, convert(varchar,doo,7) as AccoOpenDate -- Jan 01, 11
+from AMASTER
+
+select acid, name, convert(varchar,doo,9) as AccoOpenDate -- Jan  1 2011 12:00:00:000AM
+from AMASTER
+
+select acid, name, convert(varchar,doo,101) as AccoOpenDate -- 01/01/2011
+from AMASTER
+
+select acid, name, convert(varchar,doo,102) as AccoOpenDate -- 2011.01.01
+from AMASTER
+
+select acid, name, convert(varchar,doo,103) as AccoOpenDate -- 05/01/2011
+from AMASTER
+
+select acid, name, convert(varchar,doo,104) as AccoOpenDate -- 01.01.2011
+from AMASTER
+
+select acid, name, convert(varchar,doo,105) as AccoOpenDate -- 01-01-2011
+from AMASTER
+
+select acid, name, convert(varchar,doo,106) as AccoOpenDate -- 01 Jan 2011
+from AMASTER
+
+select acid, name, convert(varchar,doo,107) as AccoOpenDate -- Jan 01, 2011
+from AMASTER
