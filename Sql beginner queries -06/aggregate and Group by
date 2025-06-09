@@ -1,0 +1,110 @@
+use IBANK
+go
+--select count(*) from AMASTER
+--select min(cbal) as mincbal from AMASTER
+--select max(cbal) maxcbal from  AMASTER
+--select avg(cbal) avgcbal from AMASTER
+--select sum(cbal) sumcbal from AMASTER
+
+--Find out no.of customers in branch in BR1
+select count(*) from AMASTER
+where BRID='BR1'
+
+--Find out no.of customers in branch in BR1 and BR2
+select count(*) from AMASTER
+where brid ='BR2' or brid ='BR1'
+
+----Find out no.of customers in branch in BR1 and BR2 , using in operator
+select count(*) from AMASTER
+where brid in ('BR2','BR1')
+
+--find out total balance in br1
+select sum(cbal) from AMASTER
+where brid ='br1'
+
+--ALL aggregate functions
+select count(*) No_accounts
+, min(cbal) as mincbal 
+, max(cbal) maxcbal 
+, avg(cbal) avgcbal 
+, sum(cbal) sumcbal from AMASTER
+
+
+---1234 is  junk value, you can replace with any numeric value but it will show same output
+select count(-1234) from AMASTER
+
+--find null values in a table using any column 
+select * from AMASTER
+where UBAL  is null
+
+--find the cbal count using aggregate functions
+select count(cbal) from AMASTER --62
+select count(UBAL) from AMASTER  -- 60 beacuse of null values
+
+--Find branch wise customers
+select count(*) as b1 from AMASTER
+where BRID= 'br1'
+
+select count(*)  as b2 from AMASTER
+where BRID= 'br2'
+
+select count(*) as b3 from AMASTER
+where BRID= 'br3'
+
+--Find no of customers in branch br1, br2 and br3
+select brid, count(*) from AMASTER
+where brid in ('BR1','BR2','BR3')
+group by brid
+
+
+select pid, count(pid) from AMASTER
+group by pid
+
+--find the branch wise customers where pid is only savings bank
+select brid,count(*) from AMASTER
+where PID='SB'
+group by brid
+
+--product wise no of customers
+select pid, count(*) from AMASTER
+group by pid
+order by pid desc
+
+--use aggregate functions along with group by 
+
+select pid ,count(*) no_of_Accounts, sum(cbal) total,avg(cbal) AvgCbal, min(Cbal) min_cbal,
+max(Cbal) max_cbal
+from AMASTER
+group by pid
+
+select * from AMASTER
+
+--group by group
+select brid,pid,count(*) [no of customers in each branch and product wise] from AMASTER
+where brid = 'br1' or  brid = 'br2'
+group by brid,PID
+
+--branch wise prid wise total amount
+select brid, pid, sum(cbal) as total_cbal
+from AMASTER
+group by BRID,PID
+
+--branch wise prod wise no of customers in the year of 2011
+select brid, pid, count(*) from AMASTER
+where year(doo)=2011
+group by brid, PID
+
+select year(doo) from AMASTER
+where year(doo) not in (2011)
+
+---distinct --> remove duplicates
+select distinct brid from AMASTER
+
+--group by 
+select  brid from AMASTER
+group by brid
+
+--using aggregates with distinct
+select count(*) from AMASTER
+
+select count(distinct(BRID)) from AMASTER
