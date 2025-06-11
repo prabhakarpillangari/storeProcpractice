@@ -1,0 +1,90 @@
+select getdate() as TodayDate --2025-06-10 14:07:18.463
+select getdate()-1 as yesterdayDate --2025-06-10 14:08:17.997
+--convert
+select CONVERT(varchar,GETDATE()) --Jun 11 2025  2:07PM
+select convert(varchar,getdate(),1) --06/11/25
+select convert(varchar,getdate(),2) --25.06.11
+
+-- for year four digits
+select convert(varchar,getdate(),101) --06/11/2025
+select	convert(varchar,getdate(),102)  --2025.06.11
+select	convert(varchar,getdate(),103) --11/06/2025
+select	convert(varchar,getdate(),104)  --11.06.2025
+select	convert(varchar,getdate(),105) --11-06-2025
+select	convert(varchar,getdate(),106) --11 Jun 2025
+select	convert(varchar,getdate(),107) --Jun 11, 2025
+select upper(FORMAT(getdate(),'dd-MMM-yy')) --11-JUN-25
+
+--DateDiff()
+--it returns between b/w 2 dates interms of days/month/weeks/year
+-- it takes 3 parameters
+
+--Ex:
+ --                 date1       date2
+select DATEDIFF(YY,'2001/01/31',getdate()) no_years_gap --24
+--date2- date1
+
+select datediff(QQ,'2024/01/01',getdate())  as no_of_Quarters --5
+select datediff(WW,'2025/01/01',GETDATE()) as no_of_weeks --23
+select datediff(mm,'2024/12/1',getdate()) as No_of_months --6
+select datediff(HH,'2001/1/31',getdate()) as No_of_hoursStillYouBorn --213542
+select datediff(MI,'2001/1/31',getdate()) as no_of_mins --12812550
+select datediff(SS, '2001/1/31',getdate()) as no_of_sec --768753101
+select datediff(MS,'2001/1/31',getdate()) as no_of_milli_sec
+
+use IBANK
+go
+--list the age of each account
+--select * from AMASTER
+select  acid,name,doo, datediff(yy,doo,getdate()) as AgeofAccount 
+from AMASTER
+
+select * from AMASTER
+where ACID=133
+update AMASTER
+set doo=dateadd(yy,-2,getdate())
+where acid=133
+
+--list the accounts opened this year
+select acid,name,doo,datediff(yy,DOO,getdate()) as AgeofAccount
+from AMASTER
+where datediff(yy,doo,getdate()) =0
+
+----list the accounts opened last year
+select acid,name,doo,datediff(yy,doo,getdate()) as AgeofAccount
+from AMASTER
+where datediff(yy,doo,getdate())=1
+
+--list the accounts opened this month
+select acid,name, doo, DATEDIFF(yy,doo,GETDATE()) as AgeOfAccount
+from AMASTER
+where DATEDIFF(mm,doo,getdate())=0
+
+---list the accounts opened in last month
+select acid,name,doo,DATEDIFF(yy,doo,getdate()) as AgeofAccount
+from AMASTER
+where datediff(mm,doo,getdate())=1
+
+--list of accounts opened in current quarter
+select acid, name, doo, datediff(yy,doo,getdate()) as AgeofAccount
+from AMASTER
+where datediff(QQ,doo,GETDATE())=0
+
+--list of accounts opened in last quarter
+select acid,name, doo,datediff(mm,doo,getdate()) as AgeOfAccount --months
+from AMASTER
+where DATEDIFF(YY,doo,GETDATE())=1 --YYYY
+
+
+--listout the accounts opened today
+select acid,name,doo,ADDRESS , datediff(yy,doo,GETDATE()) as AgeOfAccount
+from AMASTER
+where datediff(DD,doo,GETDATE())=0
+
+select DOO,datediff(yy,doo,getdate())
+from AMASTER
+where datediff(YY,doo,getdate())<=3
+
+---
+--datepart()
+
