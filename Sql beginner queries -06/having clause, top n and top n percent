@@ -1,0 +1,116 @@
+--use IBANK
+--go
+--select * from AMASTER
+--top (n)
+--> gets the first n rows from table
+
+--select top 5 * from AMASTER
+--select top 5  acid,name,cbal from AMASTER
+
+---Top (n) percent
+---gets the first n percent rows from table
+
+--select 62* 30/100
+--select top 12 percent * from AMASTER
+--select top 10 * from AMASTER
+--order by CBAL desc
+--select top 10 * from AMASTER
+--order by CBAL 
+
+--latest rows
+--select top 10 * from AMASTER
+--order by doo desc
+
+--Find out the month-wise no of accounts opened in the year 2011
+--select acid, name, datepart(mm,doo),count(*) as cnt
+--from AMASTER
+--where datepart(yy,doo)=2011
+--group by DATEPART(mm,doo)
+
+--select datename(mm,doo),count(*) as cnt  --datepart(mm,doo),
+--from AMASTER
+--where datepart(yy,doo)=2011
+--group by DATEPART(mm,doo),datename(mm,doo)
+--order by 1 desc
+
+--select datepart(mm,doo) as monthNo,datename(mm,doo) as monthNM,count(*) as cnt  --datepart(mm,doo),
+--from AMASTER
+--where datepart(yy,doo)=2011
+--group by DATEPART(mm,doo),datename(mm,doo)
+--order by monthNm asc
+
+---having clause
+--product wise no.of customers in branch 1
+--select pid,count('h') as cnt
+--from AMASTER
+--where BRID='BR1'
+--group by pid
+--order by pid
+
+---provide details if no of customers exceeds greater than 5
+--select pid,count(*) as cnt
+--from AMASTER
+--group by pid
+--having count(*)>15
+
+--select pid, sum(cbal)
+--from AMASTER
+--where brid='br1'
+--group by pid
+--having sum(cbal)>50000
+
+--provide branch wise total amount in the month of january
+--provide if total month exceeds rs 5000
+
+--select BRID,sum(cbal) as totalBal
+--from AMASTER
+--where month(doo)=1
+--group by BRID
+--having sum(cbal)>5000
+
+--select * from TMASTER
+----Filter, aggregate and filter
+--select brid, count(*) as cnt
+--from TMASTER
+--where brid in ('br1','br2')
+--group by brid
+--having count(*) >100
+
+----branch wise total amount in the month of july and brid=br7
+--select brid,count(*) as cnt
+--from AMASTER
+--where month(doo)=7 and brid='br7'
+--group by brid
+
+--not recommended
+--select brid,count(*) as cnt
+--from AMASTER
+--where month(doo)=7
+--group by brid
+--having brid='br7'
+
+select brid,sum(cbal) as totalCbal into BranchwiseTotal
+from AMASTER
+where datepart(mm,doo)=7
+group by brid
+
+select * from BranchwiseTotal
+
+--for temporary tables use '#'
+--select brid,sum(cbal) as totalCbal into  #Last_Christmas_Total
+--from AMASTER
+--where datepart(mm,doo)=7
+--group by BRID
+
+--select acid,name into #customerdetails
+--from AMASTER
+
+--select * from #customerdetails
+
+--generate table with structure no need required
+--select *
+--into Am_new
+--from AMASTER
+--where 1=2
+
+--select * from Am_new
