@@ -1,0 +1,95 @@
+--joins 
+use Indian_Bank
+go
+select * from TxnMaster
+select * from AccountMaster
+
+--inner join 
+select * from 
+AccountMaster  as am join TxnMaster Tm
+on am.Acid=tm.Acid
+
+--left join
+select * from 
+AccountMaster  as am left join TxnMaster Tm
+on am.Acid=tm.Acid
+
+--right join
+select * from 
+AccountMaster  as am right join TxnMaster Tm
+on am.Acid=tm.Acid
+
+select * from AccountMaster
+select * from TxnMaster
+
+select * from 
+AccountMaster as Am full join TxnMaster as tm
+on am.Acid=tm.Acid
+
+create table A
+( number int
+)
+
+create table B
+( number int
+)
+
+insert into A values(3),(Null)
+insert into B values(1),(1),(2),(2),(2),(3),(3),(Null),(Null)
+
+--delete  A
+--where number is null
+
+select * from A
+select * from B
+
+select * from 
+A inner join B
+on a.number=B.number
+
+--left join
+select * from 
+A left join B
+on a.number=B.number
+
+--right join
+select * from 
+A right join B
+on a.number=B.number
+
+--Full join
+select * from 
+A Full join B
+on a.number=B.number
+
+create table C
+(num int)
+
+create table D
+(num int)
+
+insert into C values(1),(1),(2),(2),(null),(null)
+insert into D values(1),(1),(2),(2),(null),(null)
+
+select * from C
+select * from D
+
+--inner join 
+select * from
+C join D
+on c.num=D.num
+
+--left join 
+select * from
+C left join D
+on c.num=D.num
+
+--right join 
+select * from
+C right join D
+on c.num=D.num
+
+--Full join 
+select * from
+C Full join D
+on c.num=D.num
