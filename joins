@@ -1,0 +1,72 @@
+use Indian_Bank
+go
+select * from AccountMaster
+select * from TxnMaster
+select * from ProductMaster
+
+select name,ProductName
+from AccountMaster am inner join ProductMaster as pm
+on am.Pid=pm.Pid
+
+
+--customer wise, txntype wise, no of txns done in this month
+select am.name, TxnType , count(*) as cnt from
+AccountMaster as am join TxnMaster as TM
+on am.Acid=tm.Acid
+--where datediff(MM,DOT,GETDATE())=0
+group by name, TxnType
+order by 1 
+
+select * from TxnMaster
+
+update TxnMaster
+set dot=GETDATE()
+where TNO=1
+
+
+--list name of the account holders who deposited cash and thier product names
+alter proc Account_holder (@txntpe varchar(10))
+as begin
+(
+select name,productname
+from AccountMaster as am 
+join TxnMaster as tm
+on am.Acid=tm.Acid
+join ProductMaster as pm
+on pm.pid=am.Pid
+where tm.TxnType=@txntpe
+)
+end
+
+exec Account_holder 'CD'
+
+
+--List the names of account holders who performed any transaction.
+select distinct name
+from AccountMaster join TxnMaster
+on AccountMaster.Acid =TxnMaster.Acid
+
+--Show the  name, and cash withdrawal amount
+select distinct name,tm.Txnamt
+from AccountMaster as am join TxnMaster as Tm
+on am.Acid=Tm.Acid
+where tm.txntype='CW'
+
+select * from TxnMaster
+
+--List product-wise number of accounts.
+select productname,count(*)
+from ProductMaster pm join AccountMaster am
+on pm.Pid=am.Pid
+group by ProductName
+
+--List branch-wise and product-wise total current balance.
+select bm.Brid, pm.ProductName,sum(am.CBalance)
+from BranchMaster as bm join AccountMaster as am
+on bm.Brid=am.Brid
+join ProductMaster as pm
+on pm.Pid=am.Pid
+group by bm.Brid,pm.ProductName 
+
+
+
