@@ -1,0 +1,76 @@
+use Indian_Bank
+go
+create table customer
+(
+id int primary key,
+name varchar(10),
+address varchar(20)
+)
+
+create table Vendor
+(
+id int primary key,
+name varchar(10),
+address varchar(20)
+)
+
+insert into customer values(1,'a','Jp nagar'),(2,'b','Rv road'),(3,'c','kk road')
+insert into vendor values(1,'c','kk road'),(2,'d','jp nagar'), (3,'a','Jp nagar')
+
+
+select name,address from customer
+union all
+select name,address from Vendor
+
+---COALESCE
+--ISNULL()
+--CONCAT()
+
+SELECT * FROM EMP
+
+SELECT NAME,ISNULL(MID,0) AS MID
+FROM EMP
+
+select name , isnull(mid,-111) as mid
+from emp
+--coalesce
+create table emp1
+(
+firstN varchar(10) null,
+middleN varchar(10) null,
+lastN varchar(10) null
+)
+
+insert into emp1 values( null, 'king', null),(null,null,'queen'),('solider',null,null)
+
+select * from emp1
+
+select coalesce (firstN, MiddleN, lastN) from emp1
+
+select firstn,middlen, lastn from emp1
+
+--get full name
+select  firstn + middleN +lastN from emp1
+
+
+--concat()
+select concat(firstn,middlen,lastn) from emp1
+
+
+select * from emp
+
+--sP_help 'emp'
+
+--ALTER TABLE emp
+--DROP CONSTRAINT FK__emp__mid__02FC7413
+
+update emp
+set mid=mid+10
+
+update emp
+set mid= null
+where eid=2
+
+update emp 
+set mid= isnull(mid,0) + 1000
+
