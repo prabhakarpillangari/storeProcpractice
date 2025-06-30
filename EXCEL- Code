@@ -1,0 +1,33 @@
+Sub ParseUsingIndentLevel()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Change if needed
+
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
+
+    Dim projectKey As String, issueKey As String
+    Dim i As Long
+
+    ' Set headers
+    ws.Cells(1, 2).Value = "Project Key"
+    ws.Cells(1, 3).Value = "Issue Key"
+    ws.Cells(1, 4).Value = "Name"
+
+    For i = 2 To lastRow
+        Dim cellVal As String
+        cellVal = Trim(ws.Cells(i, 1).Value)
+
+        Select Case ws.Cells(i, 1).IndentLevel
+            Case 0
+                projectKey = cellVal
+            Case 1
+                issueKey = cellVal
+            Case Is >= 2
+                ws.Cells(i, 2).Value = projectKey
+                ws.Cells(i, 3).Value = issueKey
+                ws.Cells(i, 4).Value = cellVal
+        End Select
+    Next i
+
+    MsgBox "Finished! Output is in columns B (Project), C (Issue), D (Name).", vbInformation
+End Sub
