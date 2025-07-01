@@ -1,0 +1,106 @@
+use Indian_Bank
+go
+select * from AccountMaster
+
+select name,UPPER(name) as Upper_Case,
+			lower(name) as Lower_Case, 
+			left(name,3) as First3_chars,
+			RIGHT(name,3) as Last3_chars,
+			LTRIM(name) as Ltrim_Name,
+			RTRIM(name) as Rtrim_Name,
+			LEN(Name) as length_of_Name,
+			Ltrim(Rtrim(name)) as FUll_Trim,
+			REVERSE(name) as Reverse_Name
+
+from AccountMaster
+
+
+
+select * from 
+AccountMaster
+where len(name)=(
+select  max(len(name))
+from AccountMaster
+)
+
+create table student
+(
+sid int primary key,
+name varchar(100) not null,
+phone char(10) not null check(len(phone)=10) unique,
+dob datetime not null check(datediff(yy,dob ,getdate()) >=21  and datediff(yy,dob,getdate()) <=58),
+email varchar(100) not null check(charindex('@',email)<>0 and charindex('.',email)<>0)
+)
+
+drop table student
+
+select * from student
+
+insert into student
+values 
+(1,'kingu','7777788888','2000/02/12','kingu@gmail.com'),
+(2,'kiran','8989898989','2001/03/21','kiran@gamil.com'),
+(4,'manju','7207301997','1970/11/26','manju@.com')
+
+
+--stuff(string_source,start, length,'Replaced_String')--no condition
+select name,stuff(name,4,3,'clo') ,
+--replace(String_source, 'currentString','modifiedString') condition
+replace(name,'ra','L')as replaceName from AccountMaster
+
+update AccountMaster
+set name='prabha'
+where acid=101
+
+
+select * from AccountMaster
+
+select name+space(1)+address as name_Address from AccountMaster
+
+
+---charIndex()
+--------------------------------------------------------------------
+--the function returns the starting position of the specified expression in a string
+-- it accepts 3 parameters and 3rd one is optional
+
+select name,CHARINDEX('b',name) from AccountMaster
+
+select name+space(1)+address, charindex(' ',name+space(1)+address) from AccountMaster
+
+select * into dummyAmaster from AccountMaster
+where 1=2
+
+
+
+select * from AccountMaster
+
+select * from dummyAmaster
+
+
+
+--patindex
+--------------------------------------------------------
+--Returns the starting position of the first occurrence of a pattern
+-- in a specified expression, or zeros if the pattern not found
+
+--Syntax
+----------------
+--patindex( '%pattern%', expression)
+
+--Ex:
+--------------------
+select patindex( '%data%', 'Hi, im cloud data engineer'), -- o/p:- 14
+CHARINDEX('d','Hi, im cloud data engineer')-- o/p:- 12 
+
+--between
+--------------------
+--list the names of the customers whose balance between 10000 to 50000
+
+select name from AccountMaster
+where CBalance between 10000 and 50000
+
+--list the names of the customers who have opened accounts between 2010 and 2012
+
+select name 
+from AccountMaster
+where DATEPART(yy,DOO) between 2010 and 2012
