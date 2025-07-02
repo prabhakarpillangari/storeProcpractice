@@ -1,0 +1,57 @@
+use Indian_Bank
+go
+select name, cbalance from accountmaster
+where cbalance between 10000 and 50000
+
+
+---list no of accounts opened in 2012 and 2013
+select acid, name 
+from AccountMaster
+where DATEPART(YY,DOO) between 2012 and 2013
+
+-----------case statement ----------
+select acid, name,
+		membership =
+		case
+			when cbalance < 1000 then 'silver'
+			when cbalance between 10000 and 25000 then 'gold'
+			else 'platinum'
+		end  
+from AccountMaster
+
+select acid, name,
+	 'renweil_Accounts'=
+	 case 
+		when DATEPART(yy,doo) < 2023 then 'need to renewel your account'
+		when DATEPART(yy,doo) between 2023 and 2024 then 'maintain good balance'
+		else 'no need to renewel'
+	 end
+from AccountMaster
+
+create table Bus
+(
+Bid int not null,
+name varchar(20) not null,
+Gender char(1)
+
+insert into Bus values(1, 'raju','M'),(2,'Rani','F'),(3,'chinu','M'),(4,'pinky','F')
+
+
+select * from bus
+
+select Bid,  
+"Ename"= 
+	case
+		when gender= 'M' then 'Mr. '+ name
+		else 'Ms.'+ name
+	End
+from Bus
+
+
+--- who has the highest balance in the bank
+select acid,name, CBalance
+from AccountMaster
+where CBalance =(
+				 select max(cbalance) 
+				 from AccountMaster
+				)
