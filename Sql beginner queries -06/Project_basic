@@ -1,0 +1,35 @@
+use practice
+go 
+
+select * from SampleData
+
+select fullname from SampleData
+
+select left(Fullname, CHARINDEX(' ',fullname)) as firstName,
+  right(fullname, len(fullname) -  CHARINDEX(' ',FullName)) as lastname,
+  email,
+  right(email,len(email)-CHARINDEX('@',email)) as emailProvider,
+  Gender= 
+  case
+	 when gender='Male' then 'M'
+	 when gender='Female' then 'F'
+	 else ' '
+  end,
+SUBSTRING(PhoneNumber,CHARINDEX('(',phonenumber)+1, charindex(')',phonenumber)-2)  as Areacode,
+replace(replace(phonenumber,'(',''),') ','') as MobileNumber into StudentRefer
+
+from SampleData
+
+select * from StudentRefer
+
+
+
+
+select CHARINDEX('(',phonenumber), charindex(')',phonenumber)
+,CHARINDEX('(', phonenumber)-1, PhoneNumber from SampleData
+
+
+
+
+
+
