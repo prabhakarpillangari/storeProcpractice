@@ -1,0 +1,99 @@
+use school
+go
+
+create table CourseMaster
+(
+cid int primary key,
+courseName varchar(40) not null,
+category char(1) null check (category  in ('B','M','A')),
+Fee smallmoney not null check(Fee>0)
+)
+
+select * from CourseMaster
+insert into CourseMaster values(1,'prompt Eng','B',50000)
+INSERT INTO CourseMaster VALUES (2, 'Data Science Basics', 'A', 65000);
+INSERT INTO CourseMaster VALUES (3, 'Advanced Python', 'B', 55000);
+INSERT INTO CourseMaster VALUES (4, 'Machine Learning', 'A', 75000);
+INSERT INTO CourseMaster VALUES (5, 'Web Development', 'M', 40000);
+INSERT INTO CourseMaster VALUES (6, 'Cloud Computing', 'B', 60000);
+INSERT INTO CourseMaster VALUES (7, 'Digital Marketing', 'A', 45000);
+
+create table studentMaster
+(
+Sid tinyint primary key,
+studentName varchar(40) not null,
+origin char(1) not null check(origin in ('L','F')),
+TypeGraduate char(2) not null check(typeGraduate in ('UG','PG'))
+)
+
+insert into studentMaster values(101,'kirshan','L','PG')
+INSERT INTO studentMaster VALUES (102, 'Anita', 'F', 'UG');
+INSERT INTO studentMaster VALUES (103, 'Rahul', 'L', 'UG');
+INSERT INTO studentMaster VALUES (104, 'Sneha', 'F', 'PG');
+INSERT INTO studentMaster VALUES (105, 'Vikram', 'L', 'PG');
+INSERT INTO studentMaster VALUES (106, 'Meera', 'F', 'UG');
+select * from studentMaster
+create table EnrollmentMaster 
+(
+cid int not null foreign key (cid) references coursemaster(cid),
+sid tinyint not null foreign key (sid) references studentmaster(sid),
+DOE datetime not null,
+FWF Bit	NOT NULL,
+Grade char(1) not null check(Grade in('O','A','B','C'))
+)
+
+insert into EnrollmentMaster values(1, 101,GETDATE(),1,'B')
+-- Student 102 enrolled in course 2, got grade 'A'
+INSERT INTO EnrollmentMaster 
+VALUES (2, 102, GETDATE(), 0, 'A');
+
+-- Student 103 enrolled in course 3, got grade 'O'
+INSERT INTO EnrollmentMaster 
+VALUES (3, 103, GETDATE(), 1, 'O');
+
+-- Student 104 enrolled in course 1, got grade 'C'
+INSERT INTO EnrollmentMaster 
+VALUES (1, 104, GETDATE(), 0, 'C');
+
+select * from EnrollmentMaster
+update EnrollmentMaster
+set doe ='2025-01-07'
+where sid=104
+
+
+-----------------------------practice queries----------------------
+--1. List the course wise total no. of Students enrolled. 
+--Provide the information only for students of foreign origin and only if the total exceeds 3.
+
+
+select * from CourseMaster
+select * from EnrollmentMaster
+select * from studentMaster
+
+select courseName, count(*) as TotalForeginStudents
+from
+CourseMaster c 
+inner join EnrollmentMaster as E on c.cid=E.cid 
+inner join studentMaster as s    on E.sid=s.Sid
+where s.origin = 'F'
+group by courseName
+having count(*)>=1 
+
+---2.	List the names of the Students who have not enrolled for prompt engineering course
+
+select s.studentName
+from 
+CourseMaster as c 
+inner join EnrollmentMaster as E on c.cid=E.cid
+inner join studentMaster as s on s.Sid=E.sid
+where  c.courseName <> 'prompt Eng' -- we can !=, where not c.courseName = 'prompt Eng', c.courseName <> 'prompt Eng'
+
+--output:- Anita
+		--Rahul
+
+--3.	List the name of the advanced course where the enrollment by foreign students 
+select courseName 
+from CourseMaster c 
+inner join EnrollmentMaster E on E.cid=c.cid
+inner join studentMaster S on S.Sid=E.sid
+where category='A' and s.origin='F'
