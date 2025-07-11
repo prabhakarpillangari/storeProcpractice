@@ -1,0 +1,91 @@
+use Indian_Bank
+go
+create table sales
+(
+Doo date not null,
+customer varchar(20) not null,
+salesAmount int 
+)
+
+insert into sales values ('2020-01-20','c2',1200),('2020-02-07','c3',500),
+('2020-02-15','c1',300),('2020-02-21','c4',750),('2020-03-02','c5',1500),
+('2020-03-22','c6',8000),('2020-03-25','c4',700),('2020-03-26','c2',1200)
+
+select * from sales
+
+select datepart(mm,doo),count(*) as SalesInMonth
+from sales
+group by datepart(mm,doo)
+
+
+select *,Amount=
+		case
+			when salesAmount >1000 then 'good revenue'
+			when salesAmount <1000 then 'bad revenue'
+			else 'No Revenue'
+		end
+from sales
+
+
+select month(first_purchase) as Mon, count(*) as count_customer
+from(
+SELECT customer, Min(Doo) AS first_purchase
+FROM sales
+GROUP BY customer) as sub
+group by month(first_purchase)
+
+
+select month(first_purchase) as month, count(*) as PerMonth
+from (
+		select customer,min(Doo) as first_purchase
+		from sales
+		group by customer) 
+as sub
+group by month(first_purchase)
+
+
+select * from TxnMaster
+
+---find acid- group by
+
+		select am.Acid,name ,count(*) as NoofTXN
+		from TxnMaster as TM join AccountMaster as AM
+		on TM.ACID=Am.Acid
+		where datepart(yy,DOT)=2011
+		group by am.ACID, name
+		--having count(*)>3
+
+
+---Derived table
+
+--select * from TxnMaster
+
+select Am.acid,name,NoofTxns 
+from AccountMaster as Am 
+join (  select acid,count(*) as NoofTxns
+		from TxnMaster
+		where datepart(yy,DOT)=2011
+		group by acid
+	 ) as K
+on am.Acid = K.ACID
+
+
+select * from sales
+
+Select datepart(mm,mindoo), count(*) as NewCustomers
+from
+		(
+			select customer,min(doo) as MinDoo
+			from sales
+			group by customer
+		) as k
+group by datepart(mm,mindoo)
+
+Select datename(mm,mindoo), count(*) as NewCustomers
+from
+		(
+			select customer,min(doo) as MinDoo
+			from sales
+			group by customer
+		) as k
+group by datename(mm,mindoo)
