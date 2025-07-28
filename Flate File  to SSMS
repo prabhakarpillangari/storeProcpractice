@@ -1,0 +1,45 @@
+--use SSIS_Learning
+--go
+
+--create table course
+--(
+--courseid int,
+--coursename varchar(100),
+--courseDurationInHours int,
+--collegeName varchar(50)
+
+--)
+--CREATE TABLE COURSE(CourseId int, CourseName varchar(100), CourseDurationInHours int, CollegeName varchar(50))
+
+--drop table course
+
+--select * from course
+
+--updatE  course
+--set courseDurationInHours =10
+--where courseid=1
+
+
+use SSIS_Learning
+
+
+if (exists(select * from INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'CUSTOMER'))
+drop table customer
+create table customer
+(
+ custId varchar(7),
+ customerName varchar(20),
+ customerCity varchar(15),
+ subscription varchar(12),
+  CustomerPhone varchar(14),
+ Dummy varchar(2)
+)
+
+
+select * from customer
+select * from crosswalk
+
+truncate table customer
+
+select * from person
