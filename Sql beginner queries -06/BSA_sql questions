@@ -18,3 +18,34 @@ on f1.symbol=f2.symbol and f1.fiscal_year=f2.fiscal_year+1
 where f1.fiscal_year=(select max(fiscal_year) from financials)
 group by f1.symbol,f1.fiscal_year
 --having sum(f1.eps_diluted) < sum(f2.eps_diluted) 
+
+6. --query to find companies missing eps in last quarter but having revenue 
+--table: financials : columns| Symbol| fiscal_year| fiscal_Quarter| revenue| eps_dilutes | filing_date |
+
+SELECT f.*
+FROM financials f
+JOIN (
+    SELECT symbol, MAX(fiscal_year) AS max_year, MAX(fiscal_quarter) AS max_quarter
+    FROM financials
+    GROUP BY symbol
+) latest
+ON f.symbol = latest.symbol
+AND f.fiscal_year = latest.max_year
+AND f.fiscal_quarter = latest.max_quarter
+ORDER BY f.symbol;
+
+
+
+alter table financials
+add fiscal_quarter int
+
+UPDATE financials
+SET fiscal_quarter = 
+    CASE 
+        WHEN MONTH(filing_date) BETWEEN 1 AND 3 THEN 1
+        WHEN MONTH(filing_date) BETWEEN 4 AND 6 THEN 2
+        WHEN MONTH(filing_date) BETWEEN 7 AND 9 THEN 3
+        WHEN MONTH(filing_date) BETWEEN 10 AND 12 THEN 4
+    END;
+
+	select * from financials
