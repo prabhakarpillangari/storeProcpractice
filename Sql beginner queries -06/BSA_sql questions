@@ -1,0 +1,20 @@
+5. write a sql qurey to list companies where YoY EPS growth is negative in the most recent 
+fiscal year 
+table: financials : columns| Symbol| fiscal_year| fiscal_Quarter| eps_dilutes | filing_date |
+-----------------------------------------------------------------------------------------------------
+
+use SSIS_Learning
+go
+select * from financials
+--delete from financials
+--where year(filing_date)=2025
+
+
+select f1.symbol,sum(f1.eps_diluted) as latest_year, sum(f2.eps_diluted) as previous_year,
+(sum(f1.eps_diluted)-sum(f2.eps_diluted)/ nullif(sum(f2.eps_diluted),0) * 100) as growth_percent
+from financials f1
+join financials f2
+on f1.symbol=f2.symbol and f1.fiscal_year=f2.fiscal_year+1
+where f1.fiscal_year=(select max(fiscal_year) from financials)
+group by f1.symbol,f1.fiscal_year
+--having sum(f1.eps_diluted) < sum(f2.eps_diluted) 
